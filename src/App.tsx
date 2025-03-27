@@ -72,6 +72,7 @@ function App() {
   };
 
   const [randomLetter, setRandomLetter] = useState<string>("");
+  const [enteredLetter, setEnteredLetter] = useState<string>("");
   const [englishTranslation, setEnglishTranslation] = useState<string>("");
 
   const randomizeLetter = () => {
@@ -83,8 +84,18 @@ function App() {
     setEnglishTranslation(russianToEnglishMap[randomLetter]);
   };
 
+  const enterLetter = (e: string) => {
+    setEnteredLetter(e);
+  };
+
   useEffect(() => {
     randomizeLetter();
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener("keydown", (e: KeyboardEvent) =>
+      enterLetter(e.key),
+    );
   }, []);
 
   return (
@@ -95,12 +106,15 @@ function App() {
       <div>
         <p>English Translation: {englishTranslation}</p>
       </div>
-      <button
+      {/* <button
         onClick={randomizeLetter}
         className="mt-3 py-2 px-5 bg-[#9792e3] text-white text-base font-medium rounded-md border border-transparent cursor-pointer transition-colors duration-200 hover:border-[#61E786] focus:outline-[#61E786] focus-visible:outline-4 focus-visible:outline-[#61E786]"
       >
         Randomize Again
-      </button>
+      </button> */}
+      <div>
+        <span className="text-6xl m-5">{enteredLetter}</span>
+      </div>
     </div>
   );
 }

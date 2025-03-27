@@ -7,24 +7,44 @@
     text-align: center;
 }
 
-@keyframes shake {
+.correct {
+    animation: correctAnimation 2s ease-in-out;
+}
+
+.incorrect {
+    animation: incorrectAnimation 0.5s ease-in-out;
+}
+
+@keyframes correctAnimation {
     0% {
-        transform: translateX(0);
-    }
-    25% {
-        transform: translateX(-5px);
+        color: green;
+        transform: scale(1);
     }
     50% {
-        transform: translateX(5px);
-    }
-    75% {
-        transform: translateX(-5px);
+        color: green;
     }
     100% {
-        transform: translateX(0);
+        color: green;
+        transform: scale(1);
     }
 }
 
-.animate-shake {
-    animation: shake 0.5s ease-in-out;
+@keyframes incorrectAnimation {
+    0% {
+        color: red;
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-10px);
+    }
+    50% {
+        transform: translateX(10px);
+    }
+    75% {
+        transform: translateX(-10px);
+    }
+    100% {
+        color: red;
+        transform: translateX(0);
+    }
 }
