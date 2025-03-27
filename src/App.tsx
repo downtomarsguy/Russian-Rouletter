@@ -2,80 +2,85 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 
 function App() {
-  const russianLetters: string[] = [
-    "А",
-    "Б",
-    "В",
-    "Г",
-    "Д",
-    "Е",
-    "Ё",
-    "Ж",
-    "З",
-    "И",
-    "Й",
-    "К",
-    "Л",
-    "М",
-    "Н",
-    "О",
-    "П",
-    "Р",
-    "С",
-    "Т",
-    "У",
-    "Ф",
-    "Х",
-    "Ц",
-    "Ч",
-    "Ш",
-    "Щ",
-    "Ъ",
-    "Ы",
-    "Ь",
-    "Э",
-    "Ю",
-    "Я",
-    "а",
-    "б",
-    "в",
-    "г",
-    "д",
-    "е",
-    "ё",
-    "ж",
-    "з",
-    "и",
-    "й",
-    "к",
-    "л",
-    "м",
-    "н",
-    "о",
-    "п",
-    "р",
-    "с",
-    "т",
-    "у",
-    "ф",
-    "х",
-    "ц",
-    "ч",
-    "ш",
-    "щ",
-    "ъ",
-    "ы",
-    "ь",
-    "э",
-    "ю",
-    "я",
-  ];
+  const russianToEnglishMap: { [key: string]: string } = {
+    А: "A",
+    Б: "B",
+    В: "V",
+    Г: "G",
+    Д: "D",
+    Е: "E",
+    Ё: "Yo",
+    Ж: "Zh",
+    З: "Z",
+    И: "I",
+    Й: "Y",
+    К: "K",
+    Л: "L",
+    М: "M",
+    Н: "N",
+    О: "O",
+    П: "P",
+    Р: "R",
+    С: "S",
+    Т: "T",
+    У: "U",
+    Ф: "F",
+    Х: "Kh",
+    Ц: "Ts",
+    Ч: "Ch",
+    Ш: "Sh",
+    Щ: "Shch",
+    Ъ: "'",
+    Ы: "Y",
+    Ь: "'",
+    Э: "E",
+    Ю: "Yu",
+    Я: "Ya",
+    а: "a",
+    б: "b",
+    в: "v",
+    г: "g",
+    д: "d",
+    е: "e",
+    ё: "yo",
+    ж: "zh",
+    з: "z",
+    и: "i",
+    й: "y",
+    к: "k",
+    л: "l",
+    м: "m",
+    н: "n",
+    о: "o",
+    п: "p",
+    р: "r",
+    с: "s",
+    т: "t",
+    у: "u",
+    ф: "f",
+    х: "kh",
+    ц: "ts",
+    ч: "ch",
+    ш: "sh",
+    щ: "shch",
+    ъ: "'",
+    ы: "y",
+    ь: "'",
+    э: "e",
+    ю: "yu",
+    я: "ya",
+  };
 
   const [randomLetter, setRandomLetter] = useState<string>("");
+  const [englishTranslation, setEnglishTranslation] = useState<string>("");
 
   const randomizeLetter = () => {
-    const randomIndex = Math.floor(Math.random() * russianLetters.length);
-    setRandomLetter(russianLetters[randomIndex]);
+    const randomIndex = Math.floor(
+      Math.random() * Object.keys(russianToEnglishMap).length,
+    );
+    const randomLetter = Object.keys(russianToEnglishMap)[randomIndex];
+    setRandomLetter(randomLetter);
+    setEnglishTranslation(russianToEnglishMap[randomLetter]);
   };
 
   useEffect(() => {
@@ -85,9 +90,17 @@ function App() {
   return (
     <div className="App">
       <div>
-        <span style={{ fontSize: "48px", margin: "20px" }}>{randomLetter}</span>
+        <span className="text-6xl m-5">{randomLetter}</span>
       </div>
-      <button onClick={randomizeLetter}>Randomize Again</button>
+      <div>
+        <p>English Translation: {englishTranslation}</p>
+      </div>
+      <button
+        onClick={randomizeLetter}
+        className="mt-3 py-2 px-5 bg-[#9792e3] text-white text-base font-medium rounded-md border border-transparent cursor-pointer transition-colors duration-200 hover:border-[#61E786] focus:outline-[#61E786] focus-visible:outline-4 focus-visible:outline-[#61E786]"
+      >
+        Randomize Again
+      </button>
     </div>
   );
 }
