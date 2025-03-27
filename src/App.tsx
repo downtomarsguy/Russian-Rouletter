@@ -74,6 +74,7 @@ function App() {
   const [randomLetter, setRandomLetter] = useState<string>("");
   const [enteredLetter, setEnteredLetter] = useState<string>("");
   const [englishTranslation, setEnglishTranslation] = useState<string>("");
+  const [feedbackMessage, setFeedbackMessage] = useState<string>("");
 
   const randomizeLetter = () => {
     const randomIndex = Math.floor(
@@ -94,6 +95,21 @@ function App() {
     );
   };
 
+  const handleEnterKey = () => {
+    const correctTranslation = russianToEnglishMap[randomLetter];
+
+    if (enteredLetter === correctTranslation) {
+      setFeedbackMessage("Correct! Well done!");
+      randomizeLetter();
+    } else {
+      setFeedbackMessage(
+        `Incorrect, try again. The correct translation was "${correctTranslation}"`,
+      );
+    }
+
+    setEnteredLetter("");
+  };
+
   useEffect(() => {
     randomizeLetter();
   }, []);
@@ -105,6 +121,8 @@ function App() {
         enterLetter(e.key);
       } else if (e.key === "Backspace") {
         removeLastLetter();
+      } else if (e.key === "Enter") {
+        handleEnterKey();
       }
     };
 
@@ -113,7 +131,7 @@ function App() {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, []);
+  }, [enteredLetter, randomLetter]);
 
   return (
     <div className="App">
@@ -126,6 +144,7 @@ function App() {
       <div>
         <span className="text-6xl m-5">{enteredLetter}</span>
       </div>
+      <div>{feedbackMessage && <p>{feedbackMessage}</p>}</div>
     </div>
   );
 }
