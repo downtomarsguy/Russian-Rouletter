@@ -1,10 +1,94 @@
+import React, { useState, useEffect } from "react";
 import "./App.css";
 
 function App() {
+  const russianLetters: string[] = [
+    "А",
+    "Б",
+    "В",
+    "Г",
+    "Д",
+    "Е",
+    "Ё",
+    "Ж",
+    "З",
+    "И",
+    "Й",
+    "К",
+    "Л",
+    "М",
+    "Н",
+    "О",
+    "П",
+    "Р",
+    "С",
+    "Т",
+    "У",
+    "Ф",
+    "Х",
+    "Ц",
+    "Ч",
+    "Ш",
+    "Щ",
+    "Ъ",
+    "Ы",
+    "Ь",
+    "Э",
+    "Ю",
+    "Я",
+    "а",
+    "б",
+    "в",
+    "г",
+    "д",
+    "е",
+    "ё",
+    "ж",
+    "з",
+    "и",
+    "й",
+    "к",
+    "л",
+    "м",
+    "н",
+    "о",
+    "п",
+    "р",
+    "с",
+    "т",
+    "у",
+    "ф",
+    "х",
+    "ц",
+    "ч",
+    "ш",
+    "щ",
+    "ъ",
+    "ы",
+    "ь",
+    "э",
+    "ю",
+    "я",
+  ];
+
+  const [randomLetter, setRandomLetter] = useState<string>("");
+
+  const randomizeLetter = () => {
+    const randomIndex = Math.floor(Math.random() * russianLetters.length);
+    setRandomLetter(russianLetters[randomIndex]);
+  };
+
+  useEffect(() => {
+    randomizeLetter();
+  }, []);
+
   return (
-    <>
-      <div className="bg-blue-500">hello there</div>
-    </>
+    <div className="App">
+      <div>
+        <span style={{ fontSize: "48px", margin: "20px" }}>{randomLetter}</span>
+      </div>
+      <button onClick={randomizeLetter}>Randomize Again</button>
+    </div>
   );
 }
 
