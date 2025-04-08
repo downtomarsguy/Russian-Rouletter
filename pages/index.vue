@@ -91,7 +91,9 @@ export default {
         },
         handleKeyPress(event) {
             const key = event.key;
-            this.pressedKey += key;
+            if (/^[a-zA-Zа-яА-Я']$/.test(key)) {
+                this.pressedKey += key;
+            }
         },
     },
     mounted() {
@@ -111,5 +113,21 @@ export default {
         0 0 5px rgba(255, 255, 255, 0.8),
         0 0 10px rgba(255, 255, 255, 0.6),
         0 0 15px rgba(255, 255, 255, 0.4);
+}
+
+.incorrect-glow {
+    color: rgba(255, 99, 71, 0.8);
+    text-shadow:
+        0 0 5px rgba(255, 99, 71, 0.8),
+        0 0 10px rgba(255, 99, 71, 0.6),
+        0 0 15px rgba(255, 99, 71, 0.4);
+}
+
+.correct-glow {
+    color: rgba(80, 200, 120, 0.8);
+    text-shadow:
+        0 0 5px rgba(80, 200, 120, 0.8),
+        0 0 10px rgba(80, 200, 120, 0.6),
+        0 0 15px rgba(80, 200, 120, 0.4);
 }
 </style>
