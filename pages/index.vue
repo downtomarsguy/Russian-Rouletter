@@ -93,7 +93,9 @@ export default {
             const key = event.key;
 
             if (/^[a-zA-Zа-яА-Я']$/.test(key)) {
-                this.pressedKey += key;
+                if (this.pressedKey.length < 4) {
+                    this.pressedKey += key;
+                }
             } else if (key === "Backspace") {
                 this.pressedKey = this.pressedKey.slice(0, -1);
             }
@@ -116,5 +118,21 @@ export default {
         0 0 5px rgba(255, 255, 255, 0.8),
         0 0 10px rgba(255, 255, 255, 0.6),
         0 0 15px rgba(255, 255, 255, 0.4);
+}
+
+.incorrect-glow {
+    color: rgba(255, 99, 71, 0.8);
+    text-shadow:
+        0 0 5px rgba(255, 99, 71, 0.8),
+        0 0 10px rgba(255, 99, 71, 0.6),
+        0 0 15px rgba(255, 99, 71, 0.4);
+}
+
+.correct-glow {
+    color: rgba(80, 200, 120, 0.8);
+    text-shadow:
+        0 0 5px rgba(80, 200, 120, 0.8),
+        0 0 10px rgba(80, 200, 120, 0.6),
+        0 0 15px rgba(80, 200, 120, 0.4);
 }
 </style>
