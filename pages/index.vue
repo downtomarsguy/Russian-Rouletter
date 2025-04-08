@@ -91,7 +91,7 @@ export default {
         },
         handleKeyPress(event) {
             const key = event.key;
-            this.pressedKey = key;
+            this.pressedKey += key;
         },
     },
     mounted() {
