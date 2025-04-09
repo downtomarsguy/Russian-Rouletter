@@ -19,8 +19,8 @@
         <div class="glowing-line"></div>
 
         <div class="flex-grow flex items-center justify-center mb-10">
-            <div class="text-4xl">
-                {{ pressedKey || "[English Translation]" }}
+            <div class="text-4xl answer-glow">
+                {{ pressedKey || "[Enter English Translation]" }}
             </div>
         </div>
     </div>
@@ -107,6 +107,14 @@ export default {
         0 0 5px rgba(255, 255, 255, 0.8),
         0 0 10px rgba(255, 255, 255, 0.6),
         0 0 15px rgba(255, 255, 255, 0.4);
+}
+
+.answer-glow {
+    color: #5c6e84;
+    text-shadow:
+        0 0 5px rgba(92, 110, 132, 0.8),
+        0 0 10px rgba(92, 110, 132, 0.6),
+        0 0 15px rgba(92, 110, 132, 0.4);
 }
 
 .incorrect-glow {
