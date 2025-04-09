@@ -1,7 +1,5 @@
 <template>
-    <div
-        class="h-screen bg-[#0b132b] text-[#5C6E84] flex flex-col items-center justify-between"
-    >
+    <div class="min-h-screen bg-[#0b132b] text-[#5C6E84] flex flex-col">
         <div class="flex-grow flex flex-col items-center justify-center">
             <div
                 :class="{
@@ -18,10 +16,16 @@
 
         <div class="glowing-line"></div>
 
-        <div class="flex-grow flex items-center justify-center mb-10">
-            <div class="text-4xl answer-glow">
-                {{ pressedKey || "[Enter English Translation]" }}
-            </div>
+        <div class="h-[50vh] flex items-center justify-center w-full">
+            <input
+                type="text"
+                v-model="pressedKey"
+                @focus="onFocus"
+                @blur="onBlur"
+                @input="onInput"
+                class="text-4xl answer-glow text-center bg-transparent w-full h-full px-6 py-4"
+                placeholder="Enter English Translation"
+            />
         </div>
     </div>
 </template>
@@ -37,6 +41,7 @@ export default {
             isAnswerChecked: false,
             isCorrectAnswer: false,
             isShaking: false,
+            inputFocused: false,
         };
     },
     methods: {
@@ -46,6 +51,8 @@ export default {
             return letters[randomIndex];
         },
         handleKeyPress(event) {
+            if (this.inputFocused) return;
+
             const key = event.key;
 
             if (/^[a-zA-Zа-яА-Я']$/.test(key)) {
@@ -56,6 +63,19 @@ export default {
                 this.pressedKey = this.pressedKey.slice(0, -1);
             } else if (key === "Enter") {
                 this.checkAnswer();
+            }
+        },
+        onInput(event) {
+            const inputValue = event.target.value;
+
+            const validInput = inputValue.replace(/[^a-zA-Zа-яА-Я']+/g, "");
+
+            if (validInput.length <= 4) {
+                if (validInput !== this.pressedKey) {
+                    this.pressedKey = validInput;
+                }
+            } else {
+                this.pressedKey = validInput.slice(0, 4);
             }
         },
         checkAnswer() {
@@ -82,6 +102,12 @@ export default {
                 }, 2000);
             }
         },
+        onFocus() {
+            this.inputFocused = true;
+        },
+        onBlur() {
+            this.inputFocused = false;
+        },
     },
     mounted() {
         this.randomLetter = this.randomizeLetter();
@@ -93,7 +119,13 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+body {
+    background-color: #0b132b;
+    height: 100%;
+    margin: 0;
+}
+
 .glowing-line {
     width: 100%;
     height: 3px;
@@ -153,5 +185,24 @@ export default {
     100% {
         transform: translateX(0);
     }
+}
+
+input[type="text"] {
+    font-size: 2rem;
+    color: #5c6e84;
+    background: transparent;
+    text-align: center;
+    border: none;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    outline: none;
+    caret-color: transparent;
+}
+
+input[type="text"]:focus {
+    border-color: transparent;
+    box-shadow: none;
 }
 </style>
