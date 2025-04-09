@@ -2,7 +2,17 @@
     <div
         class="h-screen bg-[#0b132b] text-[#5C6E84] flex flex-col items-center justify-center"
     >
-        <div class="text-white glow text-6xl">{{ randomLetter }}</div>
+        <div
+            :class="{
+                glow: !isAnswerChecked && !isCorrectAnswer,
+                'incorrect-glow': isAnswerChecked && !isCorrectAnswer,
+                'correct-glow': isAnswerChecked && isCorrectAnswer,
+                'shake-animation': isShaking,
+            }"
+            class="text-white text-6xl"
+        >
+            {{ randomLetter }}
+        </div>
         <div class="mt-16 text-4xl">{{ pressedKey }}</div>
     </div>
 </template>
@@ -13,6 +23,9 @@ export default {
         return {
             randomLetter: this.randomizeLetter(),
             pressedKey: "",
+            isAnswerChecked: false,
+            isCorrectAnswer: false,
+            isShaking: false,
         };
     },
     methods: {
@@ -173,12 +186,26 @@ export default {
             };
 
             const correctAnswer = russianHashMap[this.randomLetter];
+            this.isAnswerChecked = true;
 
             if (this.pressedKey === correctAnswer) {
+                this.isCorrectAnswer = true;
                 this.pressedKey = "";
-                this.randomLetter = this.randomizeLetter();
+                this.isShaking = false;
+
+                setTimeout(() => {
+                    this.randomLetter = this.randomizeLetter();
+                    this.isAnswerChecked = false;
+                    this.isCorrectAnswer = false;
+                }, 2000);
             } else {
-                console.log("Nuh uh");
+                this.isCorrectAnswer = false;
+                this.isShaking = true;
+
+                setTimeout(() => {
+                    this.isShaking = false;
+                    this.isAnswerChecked = false;
+                }, 2000);
             }
         },
     },
@@ -215,5 +242,27 @@ export default {
         0 0 5px rgba(80, 200, 120, 0.8),
         0 0 10px rgba(80, 200, 120, 0.6),
         0 0 15px rgba(80, 200, 120, 0.4);
+}
+
+.shake-animation {
+    animation: shake 0.5s 2;
+}
+
+@keyframes shake {
+    0% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-10px);
+    }
+    50% {
+        transform: translateX(10px);
+    }
+    75% {
+        transform: translateX(-10px);
+    }
+    100% {
+        transform: translateX(0);
+    }
 }
 </style>
