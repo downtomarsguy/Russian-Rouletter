@@ -1,19 +1,28 @@
 <template>
     <div
-        class="h-screen bg-[#0b132b] text-[#5C6E84] flex flex-col items-center justify-center"
+        class="h-screen bg-[#0b132b] text-[#5C6E84] flex flex-col items-center justify-between"
     >
-        <div
-            :class="{
-                glow: !isAnswerChecked && !isCorrectAnswer,
-                'incorrect-glow': isAnswerChecked && !isCorrectAnswer,
-                'correct-glow': isAnswerChecked && isCorrectAnswer,
-                'shake-animation': isShaking,
-            }"
-            class="text-white text-6xl"
-        >
-            {{ randomLetter }}
+        <div class="flex-grow flex flex-col items-center justify-center">
+            <div
+                :class="{
+                    glow: !isAnswerChecked && !isCorrectAnswer,
+                    'incorrect-glow': isAnswerChecked && !isCorrectAnswer,
+                    'correct-glow': isAnswerChecked && isCorrectAnswer,
+                    'shake-animation': isShaking,
+                }"
+                class="text-white text-6xl"
+            >
+                {{ randomLetter }}
+            </div>
         </div>
-        <div class="mt-16 text-4xl">{{ pressedKey }}</div>
+
+        <div class="glowing-line"></div>
+
+        <div class="flex-grow flex items-center justify-center mb-10">
+            <div class="text-4xl">
+                {{ pressedKey || "[English Translation]" }}
+            </div>
+        </div>
     </div>
 </template>
 
@@ -85,6 +94,13 @@ export default {
 </script>
 
 <style scoped>
+.glowing-line {
+    width: 100%;
+    height: 3px;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+}
+
 .glow {
     color: white;
     text-shadow:
